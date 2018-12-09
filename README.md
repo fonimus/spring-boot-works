@@ -1,1 +1,3 @@
-# spring-boot-works
+# Spring Boot Works
+
+> Thoughts and pocs about spring boot
