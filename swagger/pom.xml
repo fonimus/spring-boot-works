@@ -12,6 +12,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.1.1.RELEASE</version>
+        <relativePath />
     </parent>
 
     <properties>
@@ -149,11 +150,6 @@
     </build>
 
     <pluginRepositories>
-        <pluginRepository>
-            <id>jcenter-snapshots</id>
-            <name>jcenter</name>
-            <url>http://oss.jfrog.org/artifactory/oss-snapshot-local/</url>
-        </pluginRepository>
         <pluginRepository>
             <snapshots>
                 <enabled>false</enabled>
