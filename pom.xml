@@ -12,5 +12,6 @@
         <module>prometheus</module>
         <module>swagger</module>
         <module>kotlin</module>
+        <module>admin</module>
     </modules>
 </project>
