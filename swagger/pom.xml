@@ -5,6 +5,9 @@
 
     <artifactId>swagger</artifactId>
 
+    <properties>
+        <skipTests>false</skipTests>
+    </properties>
 
     <parent>
         <groupId>io.fonimus</groupId>
@@ -68,6 +71,7 @@
                 <artifactId>swagger2markup-maven-plugin</artifactId>
                 <version>1.3.3</version>
                 <configuration>
+                    <skip>${skipTests}</skip>
                     <config>
                         <swagger2markup.extensions.springRestDocs.snippetBaseUri>target/generated-snippets</swagger2markup.extensions.springRestDocs.snippetBaseUri>
                         <swagger2markup.markupLanguage>MARKDOWN</swagger2markup.markupLanguage>
@@ -116,7 +120,7 @@
                 <version>1.8</version>
                 <executions>
                     <execution>
-                        <id>default-cli</id>
+                        <id>concat</id>
                         <phase>prepare-package</phase>
                         <goals>
                             <goal>run</goal>
@@ -132,7 +136,7 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>default-cli-cxf</id>
+                        <id>concat-cxf</id>
                         <phase>prepare-package</phase>
                         <goals>
                             <goal>run</goal>
@@ -148,6 +152,9 @@
                         </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <skip>${skipTests}</skip>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>com.ruleoftech</groupId>
