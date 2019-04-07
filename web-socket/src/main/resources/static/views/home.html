@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Comment</h3>
+    </div>
+    <div class="panel-body">
+        <form data-ng-submit="addMessage()" name="messageForm" class="col-md-12">
+            <div class="form-group">
+                <label for="topic">Select a topic</label>
+                <select name="repeatSelect" id="topic" data-ng-model="new.topic">
+                    <option data-ng-repeat="topic in topics" value="{{topic.id}}">{{topic.name}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="messageField">New message</label>
+                <textarea class="form-control" id="messageField" placeholder="Compose a new message..." rows="3"
+                          data-ng-model="new.message"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary pull-right"
+                    data-ng-disabled="!new.topic || new.message.length === 0">Send
+            </button>
+        </form>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Topics</h3>
+    </div>
+    <div class="panel-body">
+        <div data-spinner data-ng-show="loading"></div>
+        <div data-ng-show="!loading">
+            <p data-ng-if="!topics.length || topics.length == 0">No topics to display</p>
+            <div class="col-md-6" data-ng-repeat="topic in topics">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <span>{{topic.name}}</span>
+                            <span data-ng-click="refresh(topic)"
+                                  class="glyphicon glyphicon-refresh pointer pull-right"></span>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <p data-ng-if="!topic.messages || topic.messages.length == 0">No message in topic</p>
+                        <table class="table table-hover table-striped table-bordered"
+                               data-ng-if="topic.messages && topic.messages.length > 0">
+                            <tr>
+                                <th>Time</th>
+                                <th>Author</th>
+                                <th>Message</th>
+                            </tr>
+                            <tr data-ng-repeat="message in topic.messages | orderBy:'time':true">
+                                <td>{{message.time | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                <td>{{message.author}}</td>
+                                <td>{{message.content}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Notifications history</h3>
+    </div>
+    <div class="panel-body">
+        <div class="col-md-12">
+            <p data-ng-if="!messages.length || messages.length == 0">No message in topic</p>
+            <table class="table table-hover table-striped table-bordered" data-ng-if="messages && messages.length > 0">
+                <tr>
+                    <th>Time</th>
+                    <th>Type</th>
+                    <th>Resource</th>
+                    <th>Description</th>
+                </tr>
+                <tr data-ng-repeat="message in messages | orderBy:'time':true">
+                    <td>{{message.time | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td>{{message.type}}</td>
+                    <td>{{message.resourceName}}</td>
+                    <td>{{message.content}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

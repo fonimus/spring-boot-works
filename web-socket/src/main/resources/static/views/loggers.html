@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Loggers</h3>
+    </div>
+    <div class="panel-body">
+        <div data-spinner data-ng-show="loading"></div>
+        <div data-ng-show="!loading">
+            <p data-ng-show="!logs || logs.length == 0">No loggers</p>
+            <table class="table table-hover table-striped table-bordered" data-ng-show="logs && logs.length > 0">
+                <tr>
+                    <th>Name</th>
+                    <th>Configured Level</th>
+                    <th>Effective Level</th>
+                    <th>Update level</th>
+                </tr>
+                <tr data-ng-repeat="logger in logs">
+                    <td><span class="logger-name">{{logger.name}}</span></td>
+                    <td>
+                        <span class="label" data-ng-class="{{getClasses(logger.configuredLevel)}}">{{logger.configuredLevel}}</span>
+                    </td>
+                    <td>
+                        <span class="label" data-ng-class="{{getClasses(logger.effectiveLevel)}}">{{logger.effectiveLevel}}</span>
+                    </td>
+                    <td>
+                        <span data-ng-click="updateLevel(logger, 'INHERIT')" class="space pointer label label-default">INHERIT</span>
+                        <span data-ng-click="updateLevel(logger, level)" data-ng-repeat="level in levels"
+                              class="space pointer label {{getClass(level)}}">{{level}}</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

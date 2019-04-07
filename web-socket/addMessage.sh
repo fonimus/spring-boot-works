@@ -1,0 +1,1 @@
+curl -X PUT  -H 'Content-Type: application/json' -u admin:admin -d '{"author":"ben","content":"hi hi hi","time":1488660180}' http://localhost:8080/api/topic/1

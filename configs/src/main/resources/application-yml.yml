@@ -1,0 +1,41 @@
+test:
+  key: value
+
+  list-string:
+    - 1
+    - 2
+    - 3
+  map-string-object:
+    key1: 1
+    key2: 2
+
+  pojo:
+    sub: 3
+    other: 4
+
+  phone-number:
+    test: 5
+    type: work
+    value: 555-555-5555
+
+  list-pojo:
+    - sub: 6
+      other: 7
+    - sub: 8
+      other: 9
+
+  map-string-pojo:
+    key3:
+      sub: 10
+      other: 11
+    key4:
+      sub: 12
+      other: 13
+
+# result
+# phoneNumber=PhoneNumber(value=555-555-5555, type=work, test=5),
+# key=value, listString=[1, 2, 3],
+# mapStringObject={key1=1, key2=2},
+# pojo=Properties.Pojo(sub=3, other=4),
+# listPojo=[Properties.Pojo(sub=6, other=7), Properties.Pojo(sub=8, other=9)],
+# mapStringPojo={key3=Properties.Pojo(sub=10, other=11), key4=Properties.Pojo(sub=12, other=13)}

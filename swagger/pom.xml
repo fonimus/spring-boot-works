@@ -3,38 +3,41 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.fonimus</groupId>
     <artifactId>swagger</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+
 
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.1.RELEASE</version>
-        <relativePath />
+        <groupId>io.fonimus</groupId>
+        <artifactId>spring-boot-projects</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../</relativePath>
     </parent>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-    </properties>
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-spring-boot-starter-jaxrs</artifactId>
+            <version>3.2.7</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-rs-service-description</artifactId>
+            <version>3.2.7</version>
         </dependency>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.4</version>
-            <scope>provided</scope>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-rs-service-description-swagger</artifactId>
+            <version>3.2.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>swagger-ui</artifactId>
+            <version>3.19.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-features-metrics</artifactId>
+            <version>3.2.7</version>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
@@ -45,11 +48,6 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
             <version>2.9.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.restdocs</groupId>
@@ -70,8 +68,6 @@
                 <artifactId>swagger2markup-maven-plugin</artifactId>
                 <version>1.3.3</version>
                 <configuration>
-                    <swaggerInput>${project.basedir}/target/spec.json</swaggerInput>
-                    <outputDir>${project.build.directory}/generated-doc</outputDir>
                     <config>
                         <swagger2markup.extensions.springRestDocs.snippetBaseUri>target/generated-snippets</swagger2markup.extensions.springRestDocs.snippetBaseUri>
                         <swagger2markup.markupLanguage>MARKDOWN</swagger2markup.markupLanguage>
@@ -92,10 +88,26 @@
                 </dependencies>
                 <executions>
                     <execution>
+                        <id>convert-spring</id>
                         <phase>prepare-package</phase>
                         <goals>
                             <goal>convertSwagger2markup</goal>
                         </goals>
+                        <configuration>
+                            <swaggerInput>${project.basedir}/target/spec.json</swaggerInput>
+                            <outputDir>${project.build.directory}/generated-doc</outputDir>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>convert-cxf</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>convertSwagger2markup</goal>
+                        </goals>
+                        <configuration>
+                            <swaggerInput>${project.basedir}/target/spec-cxf.json</swaggerInput>
+                            <outputDir>${project.build.directory}/generated-doc-cxf</outputDir>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -119,6 +131,22 @@
                             </target>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>default-cli-cxf</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <concat destfile="${project.build.directory}/concatenated-doc-cxf/index.md"
+                                        force="yes">
+                                    <fileset dir="${project.build.directory}/generated-doc-cxf">
+                                    </fileset>
+                                </concat>
+                            </target>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>
@@ -127,15 +155,30 @@
                 <version>2.1.0</version>
                 <executions>
                     <execution>
+                        <id>generate</id>
                         <phase>prepare-package</phase>
                         <goals>
                             <goal>generate</goal>
                         </goals>
+                        <configuration>
+                            <inputDirectory>${project.build.directory}/concatenated-doc</inputDirectory>
+                            <outputDirectory>${project.build.outputDirectory}/public/spring</outputDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-cxf</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputDirectory>${project.build.directory}/concatenated-doc-cxf</inputDirectory>
+                            <outputDirectory>${project.build.outputDirectory}/public/cxf</outputDirectory>
+                        </configuration>
                     </execution>
                 </executions>
                 <configuration>
                     <inputDirectory>${project.build.directory}/concatenated-doc</inputDirectory>
-                    <outputDirectory>${project.build.outputDirectory}/public</outputDirectory>
                     <headerHtmlFile>${project.basedir}/src/main/resources/header.html</headerHtmlFile>
                     <footerHtmlFile>${project.basedir}/src/main/resources/footer.html</footerHtmlFile>
                     <inputEncoding>UTF-8</inputEncoding>

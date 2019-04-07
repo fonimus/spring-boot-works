@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            <span>Health</span>
+            <span data-ng-click="refresh(true)" class="glyphicon glyphicon-refresh pointer pull-right"></span>
+        </h3>
+    </div>
+    <div class="panel-body">
+        <div data-spinner data-ng-show="loading"></div>
+        <div data-ng-show="!loading">
+            <p data-ng-show="!healths || healths.length == 0">No health check</p>
+            <table class="table table-hover table-striped table-bordered" data-ng-show="healths && healths.length > 0">
+                <tr>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Details</th>
+                </tr>
+                <tr data-ng-repeat="health in healths">
+                    <td>{{health.name}}</td>
+                    <td><span class="label {{health.class}}">{{health.status}}</span></td>
+                    <td>
+                        <span data-ng-switch data-on="health.name">
+                        <span data-ng-switch-when="diskSpace">
+                            <uib-progressbar min="0" max="health.total" value="(health.total - health.free)"
+                                             class="progress-striped active progress-table"
+                                             type="{{getProgressBarType(health.total, health.free, health.threshold)}}">
+                            <span>{{(health.total - health.free) | size }} / {{health.total | size }}</span>
+                            </uib-progressbar>
+                        </span>
+                        <span data-ng-switch-when="db">{{health.database}}</span>
+                        <span data-ng-switch-default>{{health.details}}</span>
+                        </span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

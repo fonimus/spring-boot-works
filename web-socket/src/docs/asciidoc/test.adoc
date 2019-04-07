@@ -1,0 +1,17 @@
+= First adoc with gradle
+
+AAA
+
+== chapter 1
+
+bbb
+
+== chapter 2
+
+ccc
+
+== chapter 3
+
+ddd
+
+== chapter 4

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            <span>Jvm <span data-ng-show="!loadingMetrics">(running for {{metrics.uptime | msToStr}})</span></span>
+            <span data-ng-click="refresh(true, false, false, true)"
+                  class="glyphicon glyphicon-refresh pointer pull-right"></span>
+        </h3>
+    </div>
+    <div class="panel-body">
+        <div data-spinner data-ng-show="loadingMetrics"></div>
+        <div data-ng-show="!loadingMetrics">
+            <div class="row" data-ng-hide="vm.updatingMetrics">
+                <div class="col-md-4">
+                    <b>Memory</b>
+                    <p><span>Total Memory</span>
+                        ({{(metrics.mem - metrics['mem.free']) / 1024 | number:0}}M / {{metrics.mem / 1024 |
+                        number:0}}M)
+                    </p>
+                    <uib-progressbar min="0" max="metrics.mem" value="(metrics.mem - metrics['mem.free'])"
+                                     class="progress-striped active"
+                                     type="success">
+                        <span>{{(metrics.mem - metrics['mem.free']) * 100 / metrics.mem  | number:0}}%</span>
+                    </uib-progressbar>
+                    <p><span>Heap Memory</span> ({{metrics['heap.used'] / 1024 | number:0}}M /
+                        {{metrics['heap.committed'] / 1024 | number:0}}M)</p>
+                    <uib-progressbar min="0" max="metrics['heap.committed']" value="metrics['heap.used']"
+                                     class="progress-striped active"
+                                     type="success">
+                        <span>{{metrics['heap.used'] * 100 / metrics['heap.committed']  | number:0}}%</span>
+                    </uib-progressbar>
+                    <p><span>Non-Heap Memory</span> ({{metrics['nonheap.used'] / 1024 | number:0}}M /
+                        {{metrics['nonheap.committed'] / 1024 |
+                        number:0}}M)</p>
+                    <uib-progressbar min="0" max="metrics['nonheap.committed']" value="metrics['nonheap.used']"
+                                     class="progress-striped active"
+                                     type="success">
+                        <span>{{metrics['nonheap.used'] * 100 / metrics['nonheap.committed']  | number:0}}%</span>
+                    </uib-progressbar>
+                </div>
+                <div class="col-md-4">
+                    <b>Threads</b> (Total: {{threads.all}})
+                    <div class="pid-padding">
+                        <canvas id="threads" class="chart chart-pie"
+                                data-chart-data="threadsData"
+                                data-chart-labels="threadsLabels"
+                                data-chart-options="threadsOptions">
+                        </canvas>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <b>Garbage collections</b>
+                    <div class="row">
+                        <div class="col-md-9">Mark Sweep count</div>
+                        <div class="col-md-3 text-right">{{metrics['gc.ps_marksweep.count']}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9">Mark Sweep time</div>
+                        <div class="col-md-3 text-right">{{metrics['gc.ps_marksweep.time']}} ms</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9">Scavenge count</div>
+                        <div class="col-md-3 text-right">{{metrics['gc.ps_scavenge.count']}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9">Scavenge time</div>
+                        <div class="col-md-3 text-right">{{metrics['gc.ps_scavenge.time']}} ms</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            <span>Http</span>
+            <span data-ng-click="refresh(true, false, true, true)"
+                  class="glyphicon glyphicon-refresh pointer pull-right"></span>
+        </h3>
+    </div>
+    <div class="panel-body">
+        <div data-spinner data-ng-show="loadingMetrics"></div>
+        <div data-ng-show="!loadingMetrics">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Count</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>OK</td>
+                        <td>
+                            <uib-progressbar min="0" max="metricsHttp['all']" value="metricsHttp['200']"
+                                             class="progress-striped active progress-table" type="success">
+                                <span>{{metricsHttp['200']}}</span>
+                            </uib-progressbar>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Bad Request</td>
+                        <td>
+                            <uib-progressbar min="0" max="metricsHttp['all']" value="metricsHttp['400']"
+                                             class="progress-striped active progress-table" type="success">
+                                <span>{{metricsHttp['400']}}</span>
+                            </uib-progressbar>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Not Found</td>
+                        <td>
+                            <uib-progressbar min="0" max="metricsHttp['all']" value="metricsHttp['404']"
+                                             class="progress-striped active progress-table" type="success">
+                                <span>{{metricsHttp['404']}}</span>
+                            </uib-progressbar>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Server error</td>
+                        <td>
+                            <uib-progressbar min="0" max="metricsHttp['all']" value="metricsHttp['500']"
+                                             class="progress-striped active progress-table" type="danger">
+                                <span>{{metricsHttp['500']}}</span>
+                            </uib-progressbar>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            <span>Services (in ms)</span>
+            <span data-ng-click="refresh(true, false, true, true)"
+                  class="glyphicon glyphicon-refresh pointer pull-right"></span>
+        </h3>
+    </div>
+    <div class="panel-body">
+        <div data-spinner data-ng-show="loadingMetrics"></div>
+        <div data-ng-show="!loadingMetrics">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Service name</th>
+                        <th class="text-right">Count</th>
+                        <th class="text-right">Mean</th>
+                        <th class="text-right">Min</th>
+                        <th class="text-right">Median</th>
+                        <th class="text-right">p75</th>
+                        <th class="text-right">p95</th>
+                        <th class="text-right">p99</th>
+                        <th class="text-right">p999</th>
+                        <th class="text-right">Max</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-ng-repeat="(type, value) in metricsServices">
+                        <td>{{type}}</td>
+                        <td class="text-right">{{value.count}}</td>
+                        <td class="text-right">{{value.mean * 1000 | number:0}}</td>
+                        <td class="text-right">{{value.min * 1000 | number:0}}</td>
+                        <td class="text-right">{{value.median * 1000 | number:0}}</td>
+                        <td class="text-right">{{value['75thPercentile'] * 1000 | number:0}}</td>
+                        <td class="text-right">{{value['95thPercentile'] * 1000 | number:0}}</td>
+                        <td class="text-right">{{value['99thPercentile'] * 1000 | number:0}}</td>
+                        <td class="text-right">{{value['999thPercentile'] * 1000 | number:0}}</td>
+                        <td class="text-right">{{value.max * 1000 | number:0}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            <span>Services over time (in ms)</span>
+            <span data-ng-click="refresh(true, true, true, false)"
+                  class="glyphicon glyphicon-refresh pointer pull-right"></span>
+        </h3>
+    </div>
+    <div class="panel-body">
+        <div class="col-md-6" data-ng-repeat="(name, value) in graphs">
+            <canvas id="line" class="chart chart-line" data-chart-data="value.data"
+                    data-chart-labels="value.labels" data-chart-series="series" data-chart-options="value.options"
+                    data-chart-click="onClick">
+            </canvas>
+        </div>
+    </div>
+</div>

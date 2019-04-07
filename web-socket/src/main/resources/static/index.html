@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[ WebSocket ]</title>
+
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/webjars/angular-ui-bootstrap-bower/ui-bootstrap-csp.css" rel="stylesheet">
+    <link href="/webjars/angular-toastr/dist/angular-toastr.min.css" rel="stylesheet">
+
+    <link href="/styles/main.css" rel="stylesheet">
+    <link href="/styles/spinner.css" rel="stylesheet">
+
+    <script src="/webjars/angularjs/angular.min.js"></script>
+    <script src="/webjars/angular-animate/angular-animate.min.js"></script>
+    <script src="/webjars/angular-touch/angular-touch.min.js"></script>
+    <script src="/webjars/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="/webjars/angular-ui-bootstrap-bower/ui-bootstrap.min.js"></script>
+    <script src="/webjars/angular-ui-bootstrap-bower/ui-bootstrap-tpls.min.js"></script>
+    <script src="/webjars/angular-toastr/dist/angular-toastr.tpls.min.js"></script>
+
+    <script src="/webjars/chart.js/dist/Chart.min.js"></script>
+    <script src="/webjars/angular-chart.js/dist/angular-chart.min.js"></script>
+
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+
+    <script src="/app.js"></script>
+</head>
+<body data-ng-app="webSocketApp" data-ng-controller="WebSocketCtrl">
+<noscript>
+    <h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
+        enabled. Please enable Javascript and reload this page!</h2>
+</noscript>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1"
+                    aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="">Web-Socket</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li data-ng-class="{'active': current() == tab.state}" data-ng-repeat="tab in tabs">
+                    <a data-ui-sref="{{tab.state}}" href="">{{tab.name}}</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">
+                        Account <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="">Refresh</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="">Disconnect</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="navbar-form navbar-right">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<ol class="breadcrumb">
+    <li><a href="">Web-Socket</a></li>
+    <li class="active"><a href="">{{current()}}</a></li>
+</ol>
+
+<div class="container-fluid">
+
+    <div data-ui-view></div>
+
+</div>
+
+<footer role="contentinfo">
+    <p>© Copyright fonimus<span data-ng-if="version"> | v{{version}}</span><span
+            data-ng-if="dev"> | Development version</span></p>
+</footer>
+
+</body>
+</html>

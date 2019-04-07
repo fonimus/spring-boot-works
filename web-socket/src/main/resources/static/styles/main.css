@@ -1,0 +1,26 @@
+.pointer {
+    cursor: pointer;
+}
+
+.space {
+    margin-left: 5px;
+}
+
+.logger-name {
+    word-break: break-all;
+    display: block;
+    width: 700px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.progress-table {
+    margin-bottom: 0px;
+}
+
+.pid-padding {
+    padding-right: 50px;
+    padding-left: 50px;
+    padding-top: 10px;
+}
