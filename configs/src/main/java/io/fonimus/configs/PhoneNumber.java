@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Worldline 2018.
- */
-
 package io.fonimus.configs;
 
 import lombok.Data;

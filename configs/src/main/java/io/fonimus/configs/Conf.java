@@ -1,13 +1,10 @@
-/*
- * Copyright (c) Worldline 2018.
- */
-
 package io.fonimus.configs;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
+
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @Slf4j

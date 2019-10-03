@@ -1,10 +1,9 @@
-/*
- * Copyright (c) Worldline 2018.
- */
-
 package io.fonimus.swagger;
 
 import io.fonimus.swagger.rs.HelloServiceImpl;
+
+import java.util.Collections;
+
 import org.apache.cxf.Bus;
 import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
@@ -12,8 +11,6 @@ import org.apache.cxf.jaxrs.swagger.Swagger2Feature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.Collections;
 
 @Configuration
 public class CxfServiceConfig {

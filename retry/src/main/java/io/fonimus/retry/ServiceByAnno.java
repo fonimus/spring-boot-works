@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Worldline 2019.
- */
-
 package io.fonimus.retry;
 
 import org.slf4j.Logger;

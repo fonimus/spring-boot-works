@@ -5,10 +5,6 @@
 
     <artifactId>swagger</artifactId>
 
-    <properties>
-        <skipTests>false</skipTests>
-    </properties>
-
     <parent>
         <groupId>io.fonimus</groupId>
         <artifactId>spring-boot-projects</artifactId>
@@ -16,7 +12,15 @@
         <relativePath>../</relativePath>
     </parent>
 
-    <dependencies>
+	<properties>
+		<skipTests>false</skipTests>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-spring-boot-starter-jaxrs</artifactId>

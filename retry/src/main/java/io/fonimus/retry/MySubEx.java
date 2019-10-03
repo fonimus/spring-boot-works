@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Worldline 2019.
- */
-
 package io.fonimus.retry;
 
 public class MySubEx extends MyEx {

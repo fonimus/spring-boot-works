@@ -18,6 +18,7 @@
         <module>retry</module>
         <module>security</module>
         <module>swagger</module>
+		<module>webflux</module>
     </modules>
 
     <properties>
@@ -39,10 +40,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

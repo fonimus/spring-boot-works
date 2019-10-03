@@ -1,10 +1,7 @@
-/*
- * Copyright (c) Worldline 2019.
- */
-
 package io.fonimus.retry;
 
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.retry.RetryCallback;

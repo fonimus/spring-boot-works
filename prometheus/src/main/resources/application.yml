@@ -9,8 +9,3 @@ management:
         http.server.requests: true
       sla:
         http.server.requests: 50ms
-
-spring:
-  datasource:
-    hikari:
-      maximum-pool-size: 200
