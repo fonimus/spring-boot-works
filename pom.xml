@@ -18,7 +18,8 @@
         <module>retry</module>
         <module>security</module>
         <module>swagger</module>
-		<module>webflux</module>
+        <module>webflux</module>
+        <module>jpa</module>
     </modules>
 
     <properties>
