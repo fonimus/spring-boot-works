@@ -60,8 +60,7 @@
                     </implicitNamingStrategy>
                     <physicalNamingStrategy>org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
                     </physicalNamingStrategy>
-                    <indentSize>2</indentSize>
-                    <scanDependencies>false</scanDependencies>
+                    <format>true</format>
                 </configuration>
             </plugin>
         </plugins>
